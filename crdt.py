@@ -10,6 +10,8 @@ class Identifier:
         self.digit = digit
         self.userid = userid
 
+    def __str__(self):
+        return "Identifier<" + str(self.digit) + ", " + str(self.userid) + ">"
 
 class Entry:
     """
@@ -32,7 +34,9 @@ class Document:
     def __init__(self, document):
         self.document = document
 
-def comparePositions(position1, position2):
+def comparePositions(e1, e2):
+    position1 = e1.position
+    position2 = e2.position
     # first compare by identifiers
     for i in range(min(len(position1), len(position2))):
         curr_cmp = compareIdentifiers(position1[i], position2[i])

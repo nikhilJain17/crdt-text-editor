@@ -36,5 +36,41 @@ def test_compareIdentifiers():
     y = Identifier(0, 2)
     assert(compareIdentifiers(x,y) > 0)
 
+def test_comparePositions():
+    x = Identifier(1, 2)
+    e1 = Entry([x]*10, 'a')
+    e2 = Entry([x]*11, 'a')
+
+    assert(comparePositions(e1, e2) < 0)
+
+    x = Identifier(1, 2)
+    e1 = Entry([x]*10, 'a')
+    e2 = Entry([x]*1, 'a')
+
+    assert(comparePositions(e1, e2) > 0)
+
+    x = Identifier(1, 2)
+    e1 = Entry([x]*10, 'a')
+    e2 = Entry([x]*10, 'a')
+
+    assert(comparePositions(e1, e2) == 0)
+
+    x = Identifier(1, 2)
+    y = Identifier(1, 3)
+    e1 = Entry([x, y], 'a')
+    e2 = Entry([x, x], 'a')
+    assert(comparePositions(e1, e2) > 0)
+
+    x = Identifier(1, 2)
+    y = Identifier(1, 3)
+    e1 = Entry([x, x], 'a')
+    e2 = Entry([x, y], 'a')
+
+    assert(comparePositions(e1, e2) < 0)
+
+
+    
+
 if __name__ == "__main__":
     test_compareIdentifiers()
+    test_comparePositions()
