@@ -41,32 +41,32 @@ def test_comparePositions():
     e1 = Entry([x]*10, 'a')
     e2 = Entry([x]*11, 'a')
 
-    assert(comparePositions(e1, e2) < 0)
+    assert(comparePositions(e1.position, e2.position) < 0)
 
     x = Identifier(1, 2)
     e1 = Entry([x]*10, 'a')
     e2 = Entry([x]*1, 'a')
 
-    assert(comparePositions(e1, e2) > 0)
+    assert(comparePositions(e1.position, e2.position) > 0)
 
     x = Identifier(1, 2)
     e1 = Entry([x]*10, 'a')
     e2 = Entry([x]*10, 'a')
 
-    assert(comparePositions(e1, e2) == 0)
+    assert(comparePositions(e1.position, e2.position) == 0)
 
     x = Identifier(1, 2)
     y = Identifier(1, 3)
     e1 = Entry([x, y], 'a')
     e2 = Entry([x, x], 'a')
-    assert(comparePositions(e1, e2) > 0)
+    assert(comparePositions(e1.position, e2.position) > 0)
 
     x = Identifier(1, 2)
     y = Identifier(1, 3)
     e1 = Entry([x, x], 'a')
     e2 = Entry([x, y], 'a')
 
-    assert(comparePositions(e1, e2) < 0)
+    assert(comparePositions(e1.position, e2.position) < 0)
 
 
     

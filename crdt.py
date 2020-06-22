@@ -13,6 +13,9 @@ class Identifier:
     def __str__(self):
         return "Identifier<" + str(self.digit) + ", " + str(self.userid) + ">"
 
+    def str_digit(self):
+        return str(digit)
+
 class Entry:
     """
     A kv pair of index, char 
@@ -24,6 +27,12 @@ class Entry:
         self.position = position
         self.value = value
 
+
+    def position_to_string():
+        return map(Identifier.str_digit, position)
+
+
+
 class Document:
     """
     Document, which is a list of Entries
@@ -34,9 +43,7 @@ class Document:
     def __init__(self, document):
         self.document = document
 
-def comparePositions(e1, e2):
-    position1 = e1.position
-    position2 = e2.position
+def comparePositions(position1, position2):
     # first compare by identifiers
     for i in range(min(len(position1), len(position2))):
         curr_cmp = compareIdentifiers(position1[i], position2[i])
@@ -54,5 +61,25 @@ def compareIdentifiers(i1, i2):
     elif i1.digit == i2.digit:
         return i1.userid - i2.userid
 
-def indexBetweenPositions(entry1, entry2):
-    raise NotImplementedError
+# Given two positions, return a new position between those two using fractional indexing
+# Use base 256 digits and just split between numbers
+def indexBetweenPositions(lower_pos, upper_pos):
+    # find diff
+        # subtraction
+        # todo base10? or what...
+        # honestly fuck it ya whatever 
+        # we can add more and more digits as needed
+        # or base 16...
+        #
+        # int("123", base) where base >= 2 and base <= 26 
+
+
+    # TODO:
+    # 1. make int version of digits
+    # 2. find diff 
+    # 3. split the diff and go off
+    #   also use userid as tiebreaker if necessary?
+
+
+    # return lower_pos + diff / 2
+    
