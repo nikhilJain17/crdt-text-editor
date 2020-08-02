@@ -14,7 +14,7 @@ class Identifier:
         return "Identifier<" + str(self.digit) + ", " + str(self.userid) + ">"
 
     def str_digit(self):
-        return str(digit)
+        return str(self.digit)
 
 class Entry:
     """
@@ -28,10 +28,14 @@ class Entry:
         self.value = value
 
 
-    def position_to_string():
-        return map(Identifier.str_digit, position)
+    def positionToString(self):
+        return "".join([Identifier.str_digit(s) for s in self.position])
+
+    def positionToInt(self):
+        return int(self.positionToString())
 
 
+# typedef Position = [Identifier]
 
 class Document:
     """
@@ -63,23 +67,53 @@ def compareIdentifiers(i1, i2):
 
 # Given two positions, return a new position between those two using fractional indexing
 # Use base 256 digits and just split between numbers
-def indexBetweenPositions(lower_pos, upper_pos):
-    # find diff
-        # subtraction
-        # todo base10? or what...
-        # honestly fuck it ya whatever 
-        # we can add more and more digits as needed
-        # or base 16...
-        #
-        # int("123", base) where base >= 2 and base <= 26 
-
-
+# TODO: just use arbitrary precision arithmetic for now, and deal with site ID as tiebreaker later?
+def indexBetweenPositions(lower_entry, upper_entry, user_id):
     # TODO:
-    # 1. make int version of digits
+    # 1. make str version of digits
     # 2. find diff 
     # 3. split the diff and go off
     #   also use userid as tiebreaker if necessary?
+    lower_pos_str = lower_entry.positionToString()
+    upper_pos_str = upper_entry.positionToString()
 
+    # pad with zeros if necessary
+    upper_len = len(upper_pos_str)
+    lower_len = len(lower_pos_str)
+
+    if lower_len < upper_len:
+        lower_pos_str += ("0"*(upper_len - lower_len))
+    elif lower_len > upper_len:
+        upper_pos_str += ("0"*(lower_len - upper_len))
+
+    print(upper_pos_str + "\n" + lower_pos_str)
+
+    # find first different digit
+    first_diff_index = -1
+    for i in range(len(upper_pos_str)):
+        if upper_pos_str[i] != lower_pos_str[i]:
+            first_diff_index = i
+            break
+    
+    # can't find in between two identical entries...
+    if first_diff_index == -1:
+        return None
+
+    # from diff index onwards, generate new nums
+    lower_tail = (lower_pos_str[first_diff_index:])
+    upper_tail = (upper_pos_str[first_diff_index:])
+    print(lower_tail, upper_tail, first_diff_index)
+    # find delta
+    delta = int(upper_tail) - int(lower_tail)
+    print(delta)
+    # add delta / 2 to lower
+    middle_str = lower_pos_str[:first_diff_index] + str(int(delta / 2))
+    print("m", middle_str)
+
+    e = Entry([Identifier(s, user_id) for s in middle_str], "")
+    assert(lower_entry.positionToInt() < e.positionToInt())
+    assert(upper_entry.positionToInt() > e.positionToInt())
 
     # return lower_pos + diff / 2
-    
+    return e
+

@@ -1,5 +1,4 @@
 from crdt import *
-
 def test_compareIdentifiers():
     x = Identifier(1, 2)
     y = Identifier(1, 2)
@@ -68,9 +67,46 @@ def test_comparePositions():
 
     assert(comparePositions(e1.position, e2.position) < 0)
 
+def test_positionToInt():
+    position1 = []
+    for i in range(1,4):
+        position1.append(Identifier(i, i % 2))
+    e1 = Entry(position1, None)
+    ans1 = e1.positionToInt()
+    assert(ans1 == 123)
 
-    
+    position2 = []
+    for i in range(1, 14):
+        position2.append(Identifier(i % 10, i % 2))
+    e2 = Entry(position2, None)
+    ans2 = e2.positionToInt()
+    assert(ans2 == 1234567890123)    
+
+# @TODO add a lot more tests lol
+def test_indexBetweenPositions():
+    position1 = []
+    for i in range(1,4):
+        position1.append(Identifier(i, i % 2))
+    e1 = Entry(position1, None)
+    ans1 = e1.positionToInt()
+    assert(ans1 == 123)
+
+    position2 = []
+    for i in range(1, 14):
+        position2.append(Identifier(i % 10, i % 2))
+    e2 = Entry(position2, None)
+    ans2 = e2.positionToInt()
+    assert(ans2 == 1234567890123)    
+
+    e_middle = indexBetweenPositions(e1, e2, 12)
+    ans_middle = e_middle.positionToInt()
+    assert(ans1 < ans_middle)
+    assert(ans_middle < ans2)
+
+    print("ans1", ans1, "ans middle", ans_middle, "ans2", ans2)
 
 if __name__ == "__main__":
     test_compareIdentifiers()
     test_comparePositions()
+    test_positionToInt()
+    test_indexBetweenPositions()

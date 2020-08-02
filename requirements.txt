@@ -1,0 +1,53 @@
+=====================================================
+MAINTAINING A SHARED ORDERED LIST OF CHARACTERS
+=====================================================
+
+// a digit tagged with a userid
+identifier {
+    digit :: int
+    userid :: int 
+}
+
+// a single kv entry in the document 
+character {
+    position :: [] identifier
+    value :: char
+}
+
+// the entire document
+document {
+    value :: [] character // UNDONE: choose a more efficient data structure
+    metadata :: _
+}
+
+// to compare two positions, used for sorting
+compare_position :: position -> position -> int 
+
+// generate identifiers for inserting between two indices
+generate_identifiers_between_positions :: position -> position -> userid -> position
+
+
+=====================================================
+REMOTE API STUFF FOR COMMUNICATING BETWEEN CLIENTS
+=====================================================
+
+edit {
+    from { where }
+    to { where }
+}
+
+remote_insert 
+
+remote_delete 
+
+local_insert
+
+local_delete
+
+
+=====================================================
+NOTES
+=====================================================
+
+(Rudi Chen) https://digitalfreepen.com/2017/10/06/simple-real-time-collaborative-text-editor.html
+(Some readable paper) https://hal.inria.fr/inria-00432368/document
